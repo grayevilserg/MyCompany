@@ -30,18 +30,18 @@ namespace MyCompany
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //added config from appsettings.json
+            // added config from appsettings.json
             Configuration.Bind("Project", new Config());
 
-            //added DataManager class and linked functional
+            // added DataManager class and linked functional
             services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
             services.AddTransient<IServiceItemsRepository, EFServiceItemRepository>();
             services.AddTransient<DataManager>();
 
-            //added DB context
+            // added DB context
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
 
-            //added Identity system
+            // added Identity system
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -52,7 +52,7 @@ namespace MyCompany
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-            //added authentication cookie
+            // added authentication cookie
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "myCompanyAuth";
@@ -62,8 +62,17 @@ namespace MyCompany
                 options.SlidingExpiration = true;
             });
 
-            //added MVC controllers and views and compability with .netcore 3.0
-            services.AddControllersWithViews().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+            // added admin area authorization policy
+            services.AddAuthorization(x =>
+                {
+                    x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
+                });
+
+            // added MVC controllers and views and compability with .netcore 3.0
+            services.AddControllersWithViews(x =>
+                {
+                    x.Conventions.Add(new AdminAreaAuthoriztion("Admin", "AdminArea"));
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +90,7 @@ namespace MyCompany
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 
             });
