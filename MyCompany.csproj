@@ -10,9 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Model\ViewComponents\" />
+    <Folder Include="Models\ViewComponents\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
