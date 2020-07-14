@@ -53,12 +53,12 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
-input, select, textarea {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  appearance: none; }
-
+/*input, select, textarea {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+	}*/
 /* Basic */
 html {
   box-sizing: border-box; }
@@ -1196,3 +1196,10 @@ ul.link-list li {
   padding: 15px 0; }
   .div-box label {
     display: block; }
+  .div-box a {
+    display: block; }
+
+.img-block {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto; }

@@ -30,7 +30,7 @@ namespace MyCompany.Domain.Repositories.EntityFramework
 
         public TextField GetTextFieldByCodeWord(string codeWord)
         {
-            return context.TextFields.FirstOrDefault(x => x.CodeWord == codeWord);
+            return context.TextFields.First(x => x.CodeWord == codeWord);
         }
 
         public void SaveTextField(TextField entity)

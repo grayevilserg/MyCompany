@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,7 @@ using MyCompany.Domain.Repositories;
 using MyCompany.Domain.Repositories.Abstract;
 using MyCompany.Domain.Repositories.EntityFramework;
 using MyCompany.Service;
+
 
 namespace MyCompany
 {
@@ -73,6 +74,7 @@ namespace MyCompany
             {
                 x.Conventions.Add(new AdminAreaAuthorization("Admin","AdminArea"));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
